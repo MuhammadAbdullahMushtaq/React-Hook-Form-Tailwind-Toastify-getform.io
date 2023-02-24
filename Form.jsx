@@ -11,19 +11,28 @@ const Form = () => {
 
    const onSubmit = (data) => {
       setLoader(true)
-      // console.log(data);
+      console.log(data);
       fetch('https://getform.io/f/2a31df75-c496-41eb-b996-2288610d76f0', {
          method: 'POST',
-         body: data,
+         body: JSON.stringify(data),
          headers: {
-            "Accept": "application/json",
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
          },
       })
       .then((response) => {
-         setLoader(false);
-         clearInputs()
-         toast.success("Message Delivered Successfully...");
-         console.log(response);
+         if (response.status === 200 ) {
+            setLoader(false);
+            clearInputs()
+            toast.success("Message Delivered Successfully...");
+            console.log(response);
+            console.log(response.status);
+         }
+         else{
+            setLoader(false);
+            toast.error("Error Occurred Try Again");
+            console.log(response.status);
+         }
       })
       .catch((error) => {
          setTimeout(()=>{
@@ -70,7 +79,7 @@ const Form = () => {
                   <label title="Fields marked with * are required" className='uppercase text-sm py-2'>Subject<span className='text-red-500 text-base pl-1'>*</span></label>
                   <input type="text" {...register('subject', { required: true, maxLength: 100 })} className='border-2 rounded-lg p-3 flex border-gray-300' />
                   { errors.subject && <p className='text-red-500'>Subject is Required</p> }
-                  <input type="hidden" name='_customFieldName' style={{display:'none !important'}} />
+                  <input type="hidden" {...register( '_customFieldName' )} style={{display:'none !important'}} />
                </div>
                <div className='flex flex-col py-2'>
                   <label title="Fields marked with * are required" className='uppercase text-sm py-2'>Message<span className='text-red-500 text-base pl-1'>*</span></label>
