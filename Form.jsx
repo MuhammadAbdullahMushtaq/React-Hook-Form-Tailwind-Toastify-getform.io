@@ -66,7 +66,7 @@ const Form = () => {
                   </div>
                   <div className='flex flex-col'>
                      <label className='uppercase text-sm py-2'>WhatsApp Contact</label>
-                     <input type="tel" {...register('phone', { minLength: 12, maxLength: 12, pattern: /[0][3][0-9]{2}-[0-9]{7}/ })} placeholder='0300-0000000' className='border-2 rounded-lg p-3 flex border-gray-300' />
+                     <input type="tel" {...register('phone', { minLength: 11, maxLength: 11, pattern: /[0][3][0-4]{1}[0-9]{8}/ })} placeholder='03000000000' className='border-2 rounded-lg p-3 flex border-gray-300' />
                      { errors.phone && <p className='text-red-500'>Please Check the Phone</p> }
                   </div>
                </div>
@@ -84,7 +84,7 @@ const Form = () => {
                <div className='flex flex-col py-2'>
                   <label title="Fields marked with * are required" className='uppercase text-sm py-2'>Message<span className='text-red-500 text-base pl-1'>*</span></label>
                   <textarea {...register('message', { required: true, minLength: 20, maxLength: 5000 })} className='border-2 rounded-lg p-3 border-gray-300' rows='8'></textarea>
-                  { errors.message && <p className='text-red-500'>Please Enter Your Query</p> }
+                  { errors.message && <p className='text-red-500'>Please Enter Your Query of Min 20 Characters</p> }
                </div>
                {!loader ?
                <button type='submit' className='w-full p-4 mt-4 text-gray-100 bg-gradient-to-r from-[#5651e5] to-[#709dff]'>send message</button>
